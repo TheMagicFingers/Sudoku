@@ -2,6 +2,7 @@ package sudoku;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
@@ -50,14 +51,29 @@ public class Tabuleiro extends JPanel{
         }
         return panel;
     }
-
+    
     protected void populateFields(JTextField[][] fields, int startRow, int startCol) {
         Font font = new Font("SansSerif", Font.BOLD, 20);
         for (int row = startRow; row < startRow + 3; row++) {
             for (int col = startCol; col < startCol + 3; col++) {
+                
+                Random gerador = new Random();
+                int numRandom = 0;
+                int modRandomx = 0;
+                int modRandomy = 0;
+                while(numRandom == 0){
+                    numRandom = gerador.nextInt(10);
+                    modRandomx = gerador.nextInt(4);
+                    modRandomy = gerador.nextInt(4);
+                }
+                
                 JTextField campo = new JTextField(1);
                 campo.setHorizontalAlignment(JTextField.CENTER);
                 campo.setFont(font);
+                
+                if(row % 2 == modRandomx && col % 3 == modRandomy){
+                    campo.setText(Integer.toString(numRandom));
+                }
                 fields[row][col] = campo;
             }
         }
