@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sudoku;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -14,10 +8,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-/**
- *
- * @author gustavo
- */
 public class Tabuleiro extends JPanel{
     public static final int GRID_ROWS = 1;
     public static final int GRID_COLUMNS = 1;

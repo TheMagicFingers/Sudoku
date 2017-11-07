@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sudoku;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -18,11 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-/**
- *
- * @author gustavo
- */
 
 public class PainelLateral extends JPanel{
     public PainelLateral() {
@@ -78,7 +67,7 @@ public class PainelLateral extends JPanel{
                             out.append("\n");
                         }
                         out.close();
-                        Runtime.getRuntime().exec(System.getProperty("user.dir")+"/checker");
+                        Runtime.getRuntime().exec(System.getProperty("user.dir")+"/Sudoku");
                         
                         BufferedReader bf = new BufferedReader(new FileReader("resposta.txt"));
                         JOptionPane.showMessageDialog(null, bf.readLine());

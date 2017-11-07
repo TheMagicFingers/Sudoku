@@ -3,26 +3,25 @@
 #include <pthread.h>
 
 /**
- * Structure that holds the parameters passed to a thread.
- * This specifies where the thread should start verifying.
+ * Esta struct especifica onde a thread deve começar a verificar.
  */
 typedef struct
 {
-    // The starting row.
+    // A linha de início.
     int row;
-    // The starting column.
+    // A coluna de início.
     int col;
-    // The pointer to the board.
+    // O ponteiro para o board.
     int (* board)[9];
 } parameters;
 
-// Prototype for the walk_rows function.
+// Protótipo da função walk_rows.
 void * walk_rows(void * params);
 
-// Prototype for the walk_cols function.
+// Protótipo da função walk_cols.
 void * walk_cols(void * params);
 
-// Prototype for 3x3 square function.
+// Protótipo para os grids 3x3.
 void * check_square(void * params);
 
 // Protótipo p/ funcao de ler matriz
@@ -51,72 +50,72 @@ int main(void)
             {2, 8, 5, 4, 7, 3, 9, 1, 6}
         };*/
 
-    // ====== Create the parameter for the columns and rows check =======
+    // ====== Cria o parâmetro para checar as linhas e as colunas =======
     parameters * param0 = (parameters *) malloc(sizeof(parameters));
     param0->row = 0;
     param0->col = 0;
     param0->board = board;
 
-    // ====== Create the parameters for the 3x3 threads ======
+    // ====== Cria os parâmetros para as threads do 3x3 ======
 
-    // First 3x3
+    // Primeiro 3x3
     parameters * param1 = (parameters *) malloc(sizeof(parameters));
     param1->row = 0;
     param1->col = 0;
     param1->board = board;
 
-    // Second 3x3
+    // Segundo 3x3
     parameters * param2 = (parameters *) malloc(sizeof(parameters));
     param2->row = 0;
     param2->col = 3;
     param2->board = board;
 
-    // Third 3x3
+    // Terceiro 3x3
     parameters * param3 = (parameters *) malloc(sizeof(parameters));
     param3->row = 0;
     param3->col = 6;
     param3->board = board;
 
-    // Fourth 3x3
+    // Quarto 3x3
     parameters * param4 = (parameters *) malloc(sizeof(parameters));
     param4->row = 3;
     param4->col = 0;
     param4->board = board;
 
-    // Fifth 3x3
+    // Quinto 3x3
     parameters * param5 = (parameters *) malloc(sizeof(parameters));
     param5->row = 3;
     param5->col = 3;
     param5->board = board;
 
-    // Sixth 3x3
+    // Sexto 3x3
     parameters * param6 = (parameters *) malloc(sizeof(parameters));
     param6->row = 3;
     param6->col = 6;
     param6->board = board;
 
-    // Seventh 3x3
+    // Sétimo 3x3
     parameters * param7 = (parameters *) malloc(sizeof(parameters));
     param7->row = 6;
     param7->col = 0;
     param7->board = board;
 
-    // Eighth 3x3
+    // Oitavo 3x3
     parameters * param8 = (parameters *) malloc(sizeof(parameters));
     param8->row = 6;
     param8->col = 3;
     param8->board = board;
 
-    // Ninth 3x3
+    // Nono 3x3
     parameters * param9 = (parameters *) malloc(sizeof(parameters));
     param9->row = 6;
     param9->col = 6;
     param9->board = board;
 
-    // ====== Create the threads ======
+    // ====== Cria as threads ======
     pthread_t thread_rows, thread_cols, thread1, thread2, thread3, thread4, thread5, thread6, thread7, thread8, thread9;
 
-    // ====== Create the return values for the threads ======
+    // ====== Cria os valores de retorno das threads ======
     void * all_rows;
     void * all_cols;
     void * square1;
@@ -129,7 +128,7 @@ int main(void)
     void * square8;
     void * square9;
 
-    // ====== Initialize the threads ======
+    // ====== Inicializando as threads ======
     pthread_create(&thread_rows, NULL, walk_rows, (void *) param0);
     pthread_create(&thread_cols, NULL, walk_cols, (void *) param0);
     pthread_create(&thread1, NULL, check_square, (void *) param1);
@@ -142,7 +141,7 @@ int main(void)
     pthread_create(&thread8, NULL, check_square, (void *) param8);
     pthread_create(&thread9, NULL, check_square, (void *) param9);
 
-    // ======= Wait for all threads to finish their tasks =======
+    // ======= Join para as threads esperarem as outras terminarem suas tarefas =======
     pthread_join(thread_rows, &all_rows);
     pthread_join(thread_cols, &all_cols);
     pthread_join(thread1, &square1);
@@ -162,7 +161,7 @@ int main(void)
         exit(0);
     }
 
-    // ====== Check whether the Sudoku Puzzle was solved ======
+    // ====== Verifica se o Sudoku foi resolvido ======
     if (    (int) all_rows == 1 &&
             (int) all_cols == 1 &&
             (int) square1 == 1 &&
@@ -184,9 +183,9 @@ int main(void)
 }
 
 /**
- * Checks each row if it contains all digits 1-9.
+ * Varifica se cada linha contém todos os digitos de 1-9.
  * @param   void *      The parameters (pointer).
- * @return  void *      1 if all rows contain all digits from 1-9, 0 otherwise.
+ * @return  void *      1 se todas as linhas contêm os digítos 1-9, se não retorna 0.
  */
 void * walk_rows(void * params) {
     parameters * data = (parameters *) params;
@@ -209,9 +208,9 @@ void * walk_rows(void * params) {
 }
 
 /**
- * Checks each column if it contains all digits 1-9.
+ * Verifica se cada coluna contém os digitos de 1-9.
  * @param   void *      The parameters (pointer).
- * @return  void *      1 if all rows contain all digits from 1-9, 0 otherwise.
+ * @return  void *      1 se todas as colunas contêm os digítos 1-9, se não retorna 0.
  */
 void * walk_cols(void * params) {
     parameters * data = (parameters *) params;
@@ -234,9 +233,9 @@ void * walk_cols(void * params) {
 }
 
 /**
- * Checks if a square of size 3x3 contains all numbers from 1-9.
+ * Checa se o 3x3 contém todos os números 1-9.
  * @param   void *      The parameters (pointer).
- * @return  void *      1 if all rows contain all digits from 1-9, 0 otherwise.
+ * @return  void *      1 se tém os números 1-9, 0 caso contrário.
  */
 void * check_square(void * params) {
     parameters * data = (parameters *) params;
