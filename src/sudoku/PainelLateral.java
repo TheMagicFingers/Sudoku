@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -57,8 +59,16 @@ public class PainelLateral extends JPanel{
             checar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    String caminho_programa = "";
+                    if(System.getProperty("os.name").startsWith("Windows")){
+                        caminho_programa = System.getProperty("user.dir")+"/Sudoku.exe";
+                    }else{
+                        caminho_programa = System.getProperty("user.dir")+"/checker";
+                    }
+
                     try {
-                        FileWriter out = new FileWriter(System.getProperty("user.dir")+"/matriz.txt");
+                        FileWriter out;
+                        out = new FileWriter(System.getProperty("user.dir")+"/matriz.txt");
                         out.write("");
                         for(JTextField[] t : Tabuleiro.fields){
                             for(JTextField campo : t){
@@ -67,20 +77,22 @@ public class PainelLateral extends JPanel{
                             out.append("\n");
                         }
                         out.close();
-                        Runtime.getRuntime().exec(System.getProperty("user.dir")+"/Sudoku");
+                        
+                        Runtime.getRuntime().exec(caminho_programa);
                         
                         BufferedReader bf = new BufferedReader(new FileReader("resposta.txt"));
                         JOptionPane.showMessageDialog(null, bf.readLine());
                     } catch (IOException ex) {
-                        System.out.println("Erro.");
-                    }     
+                        Logger.getLogger(PainelLateral.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 }
             });
             
             sair.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    
+                    System.exit(0);
                 }
             });
         }
