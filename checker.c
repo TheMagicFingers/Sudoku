@@ -24,8 +24,11 @@ void * walk_cols(void * params);
 // Protótipo para os grids 3x3.
 void * check_square(void * params);
 
-// Protótipo p/ funcao de ler matriz
-void p_matriz(int matriz[9][9]);
+//matriz que armazenara os valores que vierem do txt.
+int board[9][9];
+
+// Protótipo p/ funcao de ler matriz e armazenar em board.
+void p_matriz();
 
                                 /********************
                                  * FUNÇÃO PRINCIPAL *
@@ -35,20 +38,8 @@ int main(void)
 
     // ====== Cria o "board" =======
     int i, j;
-	int board[9][9];
-	p_matriz(board);
+    p_matriz();
 
-    /*int board[9][9] = {
-            {6, 2, 4, 5, 3, 9, 1, 8, 7},
-            {5, 1, 9, 7, 2, 8, 6, 3, 4},
-            {8, 3, 7, 6, 1, 4, 2, 9, 5},
-            {1, 4, 3, 8, 6, 5, 7, 2, 9},
-            {9, 5, 8, 2, 4, 7, 3, 6, 1},
-            {7, 6, 2, 3, 9, 1, 4, 5, 8},
-            {3, 7, 1, 9, 5, 6, 8, 4, 2},
-            {4, 9, 6, 1, 8, 2, 5, 7, 3},
-            {2, 8, 5, 4, 7, 3, 9, 1, 6}
-        };*/
 
     // ====== Cria o parâmetro para checar as linhas e as colunas =======
     parameters * param0 = (parameters *) malloc(sizeof(parameters));
@@ -257,14 +248,14 @@ void * check_square(void * params) {
     return (void *) 1;
 }
 
-void p_matriz(int mat[9][9]){
+void p_matriz(){
 	FILE *file;
 	file = fopen("matriz.txt", "r");
-    int i,j;
+  int i,j;
 
 	for(i = 0; i < 9; i++){
 		for(j = 0; j < 9; j++){
-			fscanf(file, "%d", &mat[i][j]);
+			fscanf(file, "%d", &board[i][j]);
 		}
 	}
 	fclose(file);
